@@ -148,7 +148,7 @@ public class ElevatorQueue {
     public synchronized boolean dirIsFull(Person person) {
         notifyAll();
         if (targetFloor != null) {
-            return false;
+            return true;
         }
         return judge.dirIsFull(minFloor, maxFloor, personIn, person, nowFloor, personRequests);
     }
@@ -442,6 +442,9 @@ public class ElevatorQueue {
 
     public synchronized int dir(Floor floor) {
         updateMFloor();
+        if (targetFloor != null && floor.equals(targetFloor)) {
+            return arrDirection;
+        }
         return judge.dir(floor, personCnt, personDirection, minFloor, maxFloor);
     }
 

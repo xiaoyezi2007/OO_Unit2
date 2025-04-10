@@ -98,7 +98,7 @@ public class Elevator implements Runnable {
             && arrDirection == -direction) {
             op = "open";
         }
-        else if (sameWell != null && sameWell.moveAway(id) != 0) {
+        else if (sameWell != null && sameWell.moveAway(id) != 0 && floor.equals(targetFloor)) {
             if (sameWell.moveAway(id) == 1) {
                 direction = 1;
                 op = "up";
@@ -272,7 +272,7 @@ public class Elevator implements Runnable {
             }
         }
         this.floor = sameWell.update(id);
-        elevatorQueue.setNowFloor(floor.clone());
+        elevatorQueue.setNowFloor(floor);
         this.targetFloor = sameWell.getTargetFloor();
         elevatorQueue.setTargetFloor(targetFloor);
         this.arrDirection = sameWell.getArrDirection(id);
