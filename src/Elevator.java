@@ -262,8 +262,7 @@ public class Elevator implements Runnable {
         elevatorQueue.setSilence(true);
         if (elevatorQueue.havePersonIn()) {
             if (doorOpen == 0) {
-                doorOpen = 1;
-                print("OPEN", floor, id, -1, true);
+                Open();
             }
             elevatorQueue.personOutAnyway(id, floor, false);
         }
