@@ -95,26 +95,13 @@ public class Elevator implements Runnable {
             op = "close";
         }
         else if (sameWell != null && floor.equals(targetFloor) && elevatorQueue.havePersonIn()
-            && arrDirection == -direction) {
+            && arrDirection == -elevatorQueue.getPersonDirection()) {
             op = "open";
-        }
-        else if (sameWell != null && sameWell.moveAway(id) != 0 && floor.equals(targetFloor)) {
-            if (sameWell.moveAway(id) == 1) {
-                direction = 1;
-                op = "up";
-            }
-            else {
-                direction = -1;
-                op = "down";
-            }
-        }
-        else if (elevatorQueue.emptyWait()) {
-            op = "wait";
         }
         else if (elevatorQueue.isArrive(floor)) {
             op = "open";
         }
-        else {
+        else if (!elevatorQueue.emptyWait()) {
             int newDirection = elevatorQueue.dir(floor);
             if (elevatorQueue.hopeIn(newDirection, floor, size)) {
                 op = "open";
@@ -126,6 +113,19 @@ public class Elevator implements Runnable {
                 op = "down";
             }
             direction = newDirection;
+        }
+        else if (sameWell != null && sameWell.moveAway(id) != 0 && floor.equals(targetFloor)) {
+            if (sameWell.moveAway(id) == 1) {
+                direction = 1;
+                op = "up";
+            }
+            else {
+                direction = -1;
+                op = "down";
+            }
+        }
+        else {
+            op = "wait";
         }
         notifyAll();
         return op;
@@ -194,7 +194,7 @@ public class Elevator implements Runnable {
     public void Close() {
         doorOpen = 0;
         if (sameWell != null && floor.equals(targetFloor) && elevatorQueue.havePersonIn()
-            && arrDirection == -direction) {
+            && arrDirection == -elevatorQueue.getPersonDirection()) {
             elevatorQueue.personOutAnyway(id, floor, false);
         }
         else {

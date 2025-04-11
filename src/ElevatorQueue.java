@@ -196,6 +196,7 @@ public class ElevatorQueue {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            return true;
         }
         return false;
     }
@@ -471,5 +472,10 @@ public class ElevatorQueue {
     public synchronized boolean havePersonIn() {
         notifyAll();
         return !personIn.isEmpty();
+    }
+
+    public synchronized int getPersonDirection() {
+        notifyAll();
+        return personDirection;
     }
 }
