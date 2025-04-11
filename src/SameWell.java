@@ -112,6 +112,7 @@ public class SameWell {
 
     public synchronized void away() {
         busy = false;
+        quickly = false;
         notifyAll();
     }
 

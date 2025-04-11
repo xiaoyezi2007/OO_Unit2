@@ -325,7 +325,7 @@ public class ElevatorQueue {
         }
     }
 
-    public synchronized void personOutAnyway(int id, Floor floor) {
+    public synchronized void personOutAnyway(int id, Floor floor, boolean removeWaiting) {
         for (PersonRequest personRequest : personIn) {
             personCnt--;
             if (!floor.equals(new Floor(personRequest.getToFloor()))) {
@@ -338,7 +338,10 @@ public class ElevatorQueue {
         }
         personIn.clear();
         personDirection = 0;
-        removeWaitingPerson();
+        if (removeWaiting) {
+            removeWaitingPerson();
+            forceDirection = 0;
+        }
         notifyAll();
     }
 

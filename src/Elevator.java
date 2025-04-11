@@ -195,7 +195,7 @@ public class Elevator implements Runnable {
         doorOpen = 0;
         if (sameWell != null && floor.equals(targetFloor) && elevatorQueue.havePersonIn()
             && arrDirection == -direction) {
-            elevatorQueue.personOutAnyway(id, floor);
+            elevatorQueue.personOutAnyway(id, floor, false);
         }
         else {
             elevatorQueue.personOut(id, floor);
@@ -239,7 +239,7 @@ public class Elevator implements Runnable {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        elevatorQueue.personOutAnyway(id, floor);
+        elevatorQueue.personOutAnyway(id, floor, true);
         doorOpen = 0;
         print("CLOSE", floor, id, -1, true);
         print("SCHE", floor, id, -1, false);
@@ -259,9 +259,8 @@ public class Elevator implements Runnable {
     }
 
     public void Update() {
-        elevatorQueue.personOutAnyway(id, floor);
-        elevatorQueue.removeWaitingPerson();
         elevatorQueue.setSilence(true);
+        elevatorQueue.personOutAnyway(id, floor, true);
         this.sameWell = elevatorQueue.getSameWell();
         sameWell.ready();
         while (!sameWell.allReadyUpdate()) {
