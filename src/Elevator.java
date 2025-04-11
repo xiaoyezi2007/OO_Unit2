@@ -260,7 +260,7 @@ public class Elevator implements Runnable {
 
     public void Update() {
         elevatorQueue.setSilence(true);
-        elevatorQueue.personOutAnyway(id, floor, true);
+        elevatorQueue.personOutAnyway(id, floor, false);
         this.sameWell = elevatorQueue.getSameWell();
         sameWell.ready();
         while (!sameWell.allReadyUpdate()) {

@@ -39,6 +39,8 @@ public class SameWell {
             TimableOutput.println(
                 "UPDATE-BEGIN-" + elevatorA.getId() + "-" + elevatorB.getId()
             );
+            elevatorA.removeWaitingPerson();
+            elevatorB.removeWaitingPerson();
             try {
                 sleep(1000);
             } catch (InterruptedException e) {

@@ -356,6 +356,7 @@ public class ElevatorQueue {
             lowest.up();
         }
         personCnt = personIn.size();
+        forceDirection = 0;
         updateMFloor();
         notifyAll();
     }
