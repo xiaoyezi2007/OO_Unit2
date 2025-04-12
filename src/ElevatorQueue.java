@@ -153,20 +153,16 @@ public class ElevatorQueue {
         return judge.dirIsFull(minFloor, maxFloor, personIn, person, nowFloor, personRequests);
     }
 
-    public synchronized void addPersonRequest(Person person) {
-        while (isSilence()) {
-            try {
-                wait(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+    public synchronized boolean addPersonRequest(Person person) {
+        if (isSilence() || !takeable(person) || personCnt >= 12) {
+            return false;
         }
+        TimableOutput.println(
+                "RECEIVE-" + person.getPersonId() + "-" + id
+        );
         Floor floor = person.getFloorNow();
         personRequests.get(floor).add(person.getRequest());
         personCnt++;
-        TimableOutput.println(
-            "RECEIVE-" + person.getPersonId() + "-" + id
-        );
         if (maxFloor == null || maxFloor.goUp(floor)) {
             maxFloor = floor.clone();
         }
@@ -174,6 +170,7 @@ public class ElevatorQueue {
             minFloor = floor.clone();
         }
         notifyAll();
+        return true;
     }
 
     public synchronized void addScheRequest(ScheRequest scheRequest) {
@@ -190,7 +187,7 @@ public class ElevatorQueue {
         if (personCnt == 0 && isEnd) {
             return false;
         }
-        if (personIn.isEmpty() && personCnt == 0 && scheRequests.isEmpty()) {
+        if (personIn.isEmpty() && personCnt == 0 && scheRequests.isEmpty() && sameWell == null) {
             try {
                 wait(1000);
             } catch (InterruptedException e) {

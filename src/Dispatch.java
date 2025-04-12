@@ -48,20 +48,23 @@ public class Dispatch implements Runnable {
         while (true) {
             for (ElevatorQueue queue : queueMap.values()) {
                 if (queue.isEmpty() && !queue.isSilence() && queue.takeable(person)) {
-                    queue.addPersonRequest(person);
-                    return;
+                    if (queue.addPersonRequest(person)) {
+                        return;
+                    }
                 }
             }
             for (ElevatorQueue queue : queueMap.values()) {
                 if (!queue.isSilence() && queue.arriveable(person)) {
-                    queue.addPersonRequest(person);
-                    return;
+                    if (queue.addPersonRequest(person)) {
+                        return;
+                    }
                 }
             }
             for (ElevatorQueue queue : queueMap.values()) {
                 if (!queue.isSilence() && !queue.dirIsFull(person)) {
-                    queue.addPersonRequest(person);
-                    return;
+                    if (queue.addPersonRequest(person)) {
+                        return;
+                    }
                 }
             }
             ElevatorQueue bestQueue = queueMap.get(1);
@@ -75,9 +78,11 @@ public class Dispatch implements Runnable {
                     bestQueue = queue;
                 }
             }
-            if (!bestQueue.isSilence() && bestQueue.getPersonCount() < 12) {
-                bestQueue.addPersonRequest(person);
-                return;
+            if (!bestQueue.isSilence() && bestQueue.getPersonCount() < 12
+                && bestQueue.takeable(person)) {
+                if (bestQueue.addPersonRequest(person)) {
+                    return;
+                }
             }
             try {
                 sleep(50);
