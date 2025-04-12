@@ -158,7 +158,7 @@ public class ElevatorQueue {
             return false;
         }
         TimableOutput.println(
-                "RECEIVE-" + person.getPersonId() + "-" + id
+            "RECEIVE-" + person.getPersonId() + "-" + id
         );
         Floor floor = person.getFloorNow();
         personRequests.get(floor).add(person.getRequest());
