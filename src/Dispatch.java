@@ -54,7 +54,7 @@ public class Dispatch implements Runnable {
                 }
             }
             for (ElevatorQueue queue : queueMap.values()) {
-                if (!queue.isSilence() && queue.arriveable(person)) {
+                if (!queue.isSilence() && queue.arriveable(person) && queue.getPersonCount() < 12) {
                     if (queue.addPersonRequest(person)) {
                         return;
                     }
