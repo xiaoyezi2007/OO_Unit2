@@ -18,7 +18,7 @@ public class Dispatch implements Runnable {
     @Override
     public void run() {
         while (true) {
-            if (requestQueue.isEmpty() && requestQueue.isEnd() && this.isEnd()) {
+            if (isEnd()) {
                 for (ElevatorQueue queue : queueMap.values()) {
                     queue.setEnd();
                 }
@@ -94,7 +94,7 @@ public class Dispatch implements Runnable {
     }
 
     public synchronized boolean isEnd() {
-        boolean end = true;
+        boolean end = requestQueue.isEmpty() && requestQueue.isEnd();
         for (ElevatorQueue queue : queueMap.values()) {
             if (!queue.isEmpty() || queue.isSilence()) {
                 end = false;

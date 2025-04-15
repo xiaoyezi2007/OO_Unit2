@@ -86,7 +86,7 @@ public class RequestQueue {
 
     public synchronized boolean isEmpty() {
         notifyAll();
-        return requests.isEmpty() && scheRequests.isEmpty();
+        return requests.isEmpty() && scheRequests.isEmpty() && updateRequests.isEmpty();
     }
 
     public synchronized boolean isEnd() {
