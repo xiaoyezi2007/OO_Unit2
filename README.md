@@ -7,7 +7,7 @@
 >
 > 具体内容见指导书对应部分。
 >
-> 本次作业官方包已放在：http://gitlab.oo.buaa.edu.cn/2025_oo_public/official_package/hw7
+> 本次作业官方包已放在：该仓库
 
 ## 第一部分：训练目标
 
