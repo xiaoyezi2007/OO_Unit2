@@ -1,3 +1,8 @@
 .idea
-out
-src/META-INF
+input/
+*.txt
+__pycache__
+JAR/
+runtime/
+input.jar
+datainput_student_darwin_x86_64
